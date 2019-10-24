@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<style>
+
+/* Listan sijainti */
+ul {
+	padding-top: 90px;
+	padding-left: 440px;
+	list-style-type:none;
+}
+/* bodyn taustaväri*/
+body {
+background-color:grey;
+}
+
+/* Listan tyylit */
+ul li {
+  position: relative;
+  padding: 20px 22px 20px 40px;
+  background: white;
+  font-size: 18px;
+  transition: 0.2s;
+  width: 60%;
+	text-align: center;
+}
+
+/* Joka toinen listan kohta erivärillä */
+ul li:nth-child(odd) {
+  background: lightblue;
+}
+
+/* Kun hiiri viedään listan päälle se listan kohta muuttaa väriä */
+ul li:hover {
+  background: lightgrey;
+}
+
+/* Listan ominaisuudet painaessa*/
+ul li.checked {
+	text-decoration: line-through;
+  background: green;
+}
+
+/* Koko divin ominaisuudet */
+#divi {
+  background-color: grey;
+  padding: 30px 40px;
+  color: black;
+  text-align: center;
+  height: 890px;
+  height: 100%;
+}
+
+/* Tekstikentän ominaisuudet */
+#tekstikenttä {
+  width: 300px;
+  padding: 10px;
+  font-size: 22px;
+}
+
+/* Lisää napin väri, sijainti jne*/
+#lisääNappi {
+	background: green;
+	color: black;
+	cursor: pointer;
+	font-size: 20px;
+	width: 15%;
+  padding: 10px;
+  margin-left: 25px;
+}
+/*Poista nappien väri, sijainti jne*/
+.suljeNappi{
+background: red;
+position: absolute;
+cursor: pointer;
+left: 800px;
+font-size: 20px;
+width: 9%;
+}
+	</style>
+	<script>
+/*Functio joka luo listalle li elementin painettaessa lisää painiketta.*/
+	function lisääListalle(){
+		/*Haetaan kirjoitettu teksti ja siirretään se li elementtiin*/
+		var teksti = document.getElementById("tekstikenttä").value;
+		var listaElementti = document.createElement("li");
+		var x = document.createTextNode(teksti);
+		listaElementti.appendChild(x);
+		/*Tarkistetaan ettei teksti ollut tyhjä jos oli borderit punaiseksi*/
+		if (teksti === '') {
+		alert("Et voi lisätä tyhjää tehtävää");
+		document.getElementById("tekstikenttä").style ="border: 3px solid red";
+		}
+		else {
+			/*Mikäli tekstiä oli lisätään tehtävä listalle ja sille kuuntelia
+			jota painaessa muutetaan tausta vihreäksi ja borderit pois mikäli
+			ne olivat punaiset*/
+		listaElementti.addEventListener('click', function(e) {
+				listaElementti.style = "background: green";
+					});
+		document.getElementById("lista").appendChild(listaElementti);
+		document.getElementById("tekstikenttä").value = "";
+		document.getElementById("tekstikenttä").style ="border: 0px solid black";
+}
+			/*Poista nappi tehtävän perään jota painaessa listaelementti poistuu*/
+		var poistaNappi = document.createElement("input");
+		poistaNappi.setAttribute("type", "button");
+		poistaNappi.setAttribute("value", "Poista");
+		poistaNappi.className = "suljeNappi";
+		listaElementti.appendChild(poistaNappi);
+		poistaNappi.addEventListener('click', function(e) {
+		listaElementti.parentNode.removeChild(listaElementti);
+				});
+	}
+	</script>
+	</head>
+	<body>
+		<div id="divi">
+		<h1>Juhan to do list</h1>
+
+		<input type="text" id="tekstikenttä" placeholder="Anna tehtävä">
+
+		<span onclick="lisääListalle()" id="lisääNappi">Lisää</span>
+		<ul id = "lista">
+
+		</ul>
+		</div>
+	</body>
+</html>
